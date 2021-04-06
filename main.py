@@ -86,11 +86,13 @@ class BreakoutGame(tk.Tk):
                     break
 
             self.process_keys_pressed()
+            # NEW COORDINATES BASED ON SPEED AND DIRECTION (IN RADIANS)
             self.canvas.move(self.ball, -self.speed * math.cos(math.radians(self.direction)), -self.speed * math.sin(math.radians(self.direction)))
             self.after(3, self.game_loop)
 
     def process_overlap(self, tags, item):
 
+        # IN EACH PROCEDURE CALCULATING NEW DIRECTION (IN RADIANS) FOR EACH POSSIBLE QUADRANT OF CURRENT DIRECTION
         if 'padding' in tags:
             self.process_padding_hit()
 
@@ -103,6 +105,7 @@ class BreakoutGame(tk.Tk):
 
     def process_padding_hit(self):
 
+        # THREE PARTS OF PAD (LEFT, MIDDLE, RIGHT) REFLECT THE BALL DIFFERENTLY
         coord_ball = self.canvas.coords(self.ball)
         coord_padding = self.canvas.coords(self.padding)
         if coord_ball[0] - coord_padding[0] < 25:
@@ -294,7 +297,6 @@ class BreakoutGame(tk.Tk):
         self.game_over = True
         self.game_over_text = self.canvas.create_text(355, 300, text="GAME OVER", fill='#FFAE0D', font=('Arial', 36, 'bold'), anchor="center")
         self.press_keys_text = self.canvas.create_text(355, 350, text="Press SPACE to continue or ESC to exit", fill='#FFAE0D', font=('Arial', 24, 'bold'), anchor="center")
-
 
     class LabelFrame(tk.Frame):
         def __init__(self, parent,  label_name, label_var, *args, **kwargs):
